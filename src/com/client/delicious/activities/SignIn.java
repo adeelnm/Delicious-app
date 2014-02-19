@@ -14,8 +14,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -67,6 +69,10 @@ public class SignIn extends Activity {
 						public void success(String message) {
 							// TODO Auto-generated method stub
 							pd.dismiss();
+							SharedPreferences pref = getSharedPreferences("com.client.delicious.activities", Context.MODE_PRIVATE);
+							pref.edit().putString(AppGlobal.APP_SHARED_PREF_ACCESS_TOKEN, message).commit();
+							Intent intent = new Intent(SignIn.this, ShowBookmarks.class);
+							startActivity(intent);
 						}
 
 						@Override
@@ -80,7 +86,6 @@ public class SignIn extends Activity {
 			                    @Override
 			                    public void onClick(DialogInterface arg0, int arg1) {
 			                        // TODO Auto-generated method stub
-			                        //Toast.makeText(getApplicationContext(), "Ok is clicked", Toast.LENGTH_LONG).show();
 			                    }
 			                });
 			                builder.show();
