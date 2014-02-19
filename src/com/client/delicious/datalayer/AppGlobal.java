@@ -7,7 +7,7 @@ public class AppGlobal {
 	public static final String APP_SHARED_PREF_ACCESS_TOKEN = "access token";
 	public static final String DELICIOUS_API_OAUTH_URL = "https://avosapi.delicious.com/api/v1/oauth/token?client_id=";
 	public static final String DELICIOUS_API_URL = "api.delicious.com/v1/posts/";
-	public static final String ABC = "";
+	public static final String ABC = "You changed it";
 	
 	
 }
