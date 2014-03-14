@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textView_addBookmark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add new Bookmark"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView_addBookmark"
+        android:layout_marginTop="10dp"
+        android:text="URL" />
+
+    <EditText
+        android:id="@+id/txt_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView_addBookmark"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="http://www.example.com" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_url"
+        android:layout_marginTop="10dp"
+        android:text="Description" />
+
+    <EditText
+        android:id="@+id/txt_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView_desc"
+        android:ems="10"
+        android:hint="This is a website description" />
+
+    <TextView
+        android:id="@+id/textView_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_description"
+        android:layout_marginTop="10dp"
+        android:text="Tags" />
+
+    <EditText
+        android:id="@+id/txt_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView_tag"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/textView_extendedComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_tag"
+        android:layout_marginTop="10dp"
+        android:text="Extended Coments" />
+
+    <EditText
+        android:id="@+id/txt_extendedComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textView_extendedComments"
+        android:ems="10"
+        android:maxLength="1000" />
+
+    <Button
+        android:id="@+id/btn_addBookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/txt_extendedComments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:background="@color/light_blue"
+        android:textColor="@color/white"
+        android:text=" Add Bookmark " />
+
+    <CheckBox
+        android:id="@+id/checkBox_private"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txt_extendedComments"
+        android:text="Make Private" />
+
+</RelativeLayout>

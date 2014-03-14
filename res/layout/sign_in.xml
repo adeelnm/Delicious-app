@@ -11,6 +11,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/ic_action_person"
         android:ems="10"
         android:hint="Username" >
     </EditText>
@@ -23,6 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/txt_username"
         android:layout_marginTop="28dp"
+        android:drawableLeft="@drawable/ic_action_accounts"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" >
@@ -30,14 +32,18 @@
         <requestFocus />
     </EditText>
 
-    <Button
+    <com.client.delicious.utilities.ButtonBgChange
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/txt_password"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="47dp"
-        android:text="Login" />
+        android:background="@color/light_blue"
+        android:text="Login"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

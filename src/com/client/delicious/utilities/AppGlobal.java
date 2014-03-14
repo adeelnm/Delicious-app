@@ -16,6 +16,7 @@ public class AppGlobal
 	public static final int		RESPONSE_FAIL					= 2;
 
 	// /DataFetcher Actions Constants
-	public static final String	ACTION_DATAFETCHER_SIGNIN		= "signIn";
+	public static final String	ACTION_DATAFETCHER_SIGN_IN		= "signIn";
 	public static final String	ACTION_DATAFETCHER_GET_LINKS	= "fetch";
+	public static final String	ACTION_DATAFETCHER_ADD_LINKS	= "add";
 }

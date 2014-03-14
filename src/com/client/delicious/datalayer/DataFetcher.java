@@ -14,26 +14,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
 import com.client.delicious.utilities.AppGlobal;
 
 public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 {
+
 	IAsyncTask		async;
 	ResponseFetcher	responseFetcher;
-	String			status, bookMarksFeeds;
-	JSONObject 		jObject;
+	String			status, bookMarksFeeds, responseXML;
+	JSONObject		jObject;
+
 	public DataFetcher( IAsyncTask asyncTask )
 	{
-
 		this.async = asyncTask;
 	}
 
 	@Override
 	protected void onPreExecute()
 	{
-
 		async.doWait();
 	}
 
@@ -44,25 +42,26 @@ public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 		responseFetcher = new ResponseFetcher();
 		responseFetcher.status = -1;
 		responseFetcher.message = "";
-		
 
 		if( params != null )
 		{
-			if( params[0].equals( AppGlobal.ACTION_DATAFETCHER_SIGNIN ) )
+			if( params[0].equals( AppGlobal.ACTION_DATAFETCHER_SIGN_IN ) )
 			{
 				bookMarksFeeds = ServerHit( params[1] );
-				
 				try
 				{
 					jObject = new JSONObject( bookMarksFeeds );
 					status = jObject.getString( "status" );
 					if( status.equals( AppGlobal.STATUS_SUCESS ) )
 					{
-						
+
 						responseFetcher.status = AppGlobal.RESPONSE_SUCCESS;
-						responseFetcher.message = jObject.getString( "access_token" );
-						String test = ServerHit(AppGlobal.DELICIOUS_API_URL + "all");
-						Log.d( "checking header", test );
+						BasePostsList.accessToken = jObject.getString( "access_token" );
+
+						responseXML = ServerHit( AppGlobal.DELICIOUS_API_URL + "all" );
+
+						responseFetcher.serverResponse = responseXML;
+						// Log.d( "checking header", responseXML );
 					}
 					else
 					{
@@ -77,6 +76,21 @@ public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 					responseFetcher.message = e.toString();
 				}
 			}
+			else
+			{
+				if( params[0].equals( AppGlobal.ACTION_DATAFETCHER_ADD_LINKS ) )
+				{
+					responseFetcher.status = AppGlobal.RESPONSE_SUCCESS;
+					responseFetcher.message = params[2];
+					responseXML = ServerHit( params[1] );
+					responseFetcher.serverResponse = responseXML;
+				}
+				else
+				{
+					responseFetcher.status = AppGlobal.RESPONSE_FAIL;
+					responseFetcher.message = AppGlobal.STATUS_FAIL;
+				}
+			}
 		}
 		return responseFetcher;
 	}
@@ -84,10 +98,11 @@ public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 	@Override
 	protected void onPostExecute( ResponseFetcher result )
 	{
+
 		switch ( result.status )
 		{
 			case AppGlobal.RESPONSE_SUCCESS:
-				this.async.success( result.message );
+				this.async.success( result.message, result.serverResponse );
 				break;
 
 			case AppGlobal.RESPONSE_FAIL:
@@ -98,19 +113,22 @@ public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 
 	private String ServerHit( String url )
 	{
+
 		StringBuilder messageFeedBuilder = new StringBuilder();
 		HttpClient httpClient = new DefaultHttpClient();
 		try
 		{
 			// pass search URL string to fetch
 			HttpPost httpPost = new HttpPost( url );
-			if(responseFetcher.status == AppGlobal.RESPONSE_SUCCESS)
+			if( responseFetcher.status == AppGlobal.RESPONSE_SUCCESS )
 			{
-				String access = "Bearer " + jObject.getString( "access_token" );
+				String access = "Bearer " + BasePostsList.accessToken; // jObject.getString(
+																		// "access_token"
+																		// );
 				httpPost.addHeader( "Authorization", access );
-				httpPost.addHeader( "host", "http://api.delicious.com" );
-			// execute request
-				}
+				// httpPost.addHeader( "host", "http://api.delicious.com" );
+				// execute request
+			}
 			HttpResponse httpResponse = httpClient.execute( httpPost );
 			// check status, only proceed if ok
 			StatusLine searchStatus = httpResponse.getStatusLine();
@@ -120,8 +138,7 @@ public class DataFetcher extends AsyncTask<String, String, ResponseFetcher>
 				HttpEntity messageEntity = httpResponse.getEntity();
 				InputStream messageContent = messageEntity.getContent();
 				// process the results
-				InputStreamReader messageInput = new InputStreamReader(
-						messageContent );
+				InputStreamReader messageInput = new InputStreamReader( messageContent );
 				BufferedReader messageReader = new BufferedReader( messageInput );
 				String lineIn;
 				while ( ( lineIn = messageReader.readLine() ) != null )

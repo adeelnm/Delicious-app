@@ -1,7 +1,10 @@
 package com.client.delicious.datalayer;
 
-public class ResponseFetcher {
+public class ResponseFetcher
+{
 
-	public int status;
-	public String message;
+	public int		status;
+	public String	message;
+	public String	serverResponse;
+
 }
